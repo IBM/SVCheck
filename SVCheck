@@ -1,0 +1,162 @@
+#!/usr/bin/python
+import sys
+try:
+    raw_input      # Python 2
+    PYTHON3 = False
+except NameError:  # Python 3
+    raw_input = input
+    PYTHON3 = True
+
+if not PYTHON3:
+    sys.exit("This tool only works with Python 3\n")
+
+import argparse
+import socket
+import getpass
+try:
+    from classes.SV_utils import SV_system
+except BaseException:
+    print("Error loading SV_system class. " +
+        "Have you installed the Python modules defined on the README.md file?")
+    sys.exit(7)
+
+SV_VERSION = "1.0"
+
+GITHUB_URL="https://github.com/IBM/SVCheck"
+
+# Colorful constants
+RED = '\033[91m'
+GREEN = '\033[92m'
+YELLOW = '\033[93m'
+NOCOLOR = '\033[0m'
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        '-i',
+        '--ip',
+        required=True,
+        action='store',
+        dest='ip_address',
+        help='IPv4 address of Spectrum Virtualize system',
+        metavar='IPv4_ADDRESS',
+        type=str)
+
+    parser.add_argument(
+        '-u',
+        '--username',
+        required=True,
+        action='store',
+        dest='username',
+        help='username of Spectrum Virtualize',
+        metavar='USERNAME',
+        type=str)
+
+    parser.add_argument(
+        '-p',
+        '--password',
+        required=False,
+        action='store',
+        dest='password',
+        help='password of Spectrum Virtualize',
+        metavar='PASSWORD',
+        type=str,
+        default=None)
+
+    parser.add_argument(
+        '-v',
+        '--verbose',
+        action='store_true',
+        dest='verbose',
+        help='show verbose messages in console',
+        default=False)
+
+    parser.add_argument(
+        '-V',
+        '--version',
+        action='version',
+        version='Spectrum Virtualize Check (SVCheck) ' +
+        'version ' + SV_VERSION)
+
+    args = parser.parse_args()
+
+    # Lets check the IP
+    is_IP = is_IP_address(args.ip_address)
+
+    if is_IP == False:
+        sys.exit("The IP you passed " + args.ip_address +
+            " does not seems to be valid.")
+    
+    #No password passed lets ask for it
+    if args.password == None:
+        args.password = getpass.getpass("Please type the password for user '" + args.username + "' :")
+
+    return (args.ip_address,
+            args.username,
+            args.password,
+            args.verbose)
+
+
+def print_header():
+   while True:
+ 
+        print("")
+        print(
+            GREEN +
+            " Welcome Spectrum Virtualize Checker (SVCheck) version " +
+            SV_VERSION + NOCOLOR)
+        print("")
+        print(GREEN +
+            " It generates an Excel file Spectrum Virtualize system" +
+            " with relevant information of current status using the API" + NOCOLOR)
+        print("")
+        print(
+            YELLOW +
+            " Please read the README.md file that comes with this tool" + NOCOLOR)
+        print(
+            YELLOW +
+            " Please check " + GITHUB_URL + " the latest information about this tool" + NOCOLOR)
+        print("")
+
+        print(
+            RED +
+            " This tool comes with no warranty of anykind, use at your own risk" + NOCOLOR)
+        print("")
+        try:
+            run_this = raw_input("Do you want to continue? (y/n): ")
+            if run_this.lower() == 'y':
+                break
+            if run_this.lower() == 'n':
+                print("")
+                sys.exit(GREEN + "Have a nice day! Bye.\n" + NOCOLOR)
+        except KeyboardInterrupt:
+            continue
+
+
+def is_IP_address(ip):
+    # Lets check is a full ip by counting dots
+    if ip.count('.') != 3:
+        return False
+    try:
+        socket.inet_aton(ip)
+        return True
+    except Exception:
+        return False
+
+
+def main():
+
+    ip_address, username, password , verbose = parse_arguments()
+
+    print_header()
+
+    my_system = SV_system(ip_address, username, password, "./output/" + ip_address + "/", verbose)
+    my_system.generate_excel_report()
+    # Example of running a single command
+    #print(my_system.run_command("lsnodecanisterstats"))
+
+
+if __name__ == "__main__":
+    main()
