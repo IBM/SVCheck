@@ -232,7 +232,7 @@ class SV_system(object):
                         "Auth service type": lssystem['auth_service_type'],
                         "Callhome": lssystem['enhanced_callhome'],
                         "Callhome censor": lssystem['censor_callhome'],
-                        "Quorum lease": lssystem['quorum_lease'],
+                        # "Quorum lease": lssystem['quorum_lease'],
                         "Copy rate": lssystem['relationship_bandwidth_limit'],
                         "Local raw capacity": lssystem['total_drive_raw_capacity'],
                         "Physical total": lssystem['physical_capacity'],

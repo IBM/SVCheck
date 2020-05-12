@@ -7,7 +7,8 @@ This tools generates Excel file of Spectrum Virtualize system via REST API calls
 ###### Must read
 
 - Python 3 is required
-- requests, openpyxl and pandas modules **must** be installed before running this tool
+- [Spectrum Virtualize 8.1.3 or newer](https://www-01.ibm.com/common/ssi/ShowDoc.wss?docURL=/common/ssi/rep_ca/9/897/ENUS218-179/index.html&request_locale=en) is required
+- [requests, openpyxl and pandas modules **must** be installed](https://github.com/IBM/SVCheck/wiki/How-to-install-the-prerequisites) before running this tool
 - To generate the Excel any user role is valid for the user on Spectrum Virtualize system
 - If a command replies no data it generates an empty sheet in the Excel file
 - Excel file and logs are created on ./output/IP_ADDRESS/ directory
