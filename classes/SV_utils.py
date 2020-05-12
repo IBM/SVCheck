@@ -44,7 +44,7 @@ class SV_system(object):
         self.first_run = True
         self._report_commands = [
                                 "lssystem",
-                                "lsnodecanister",
+                                "lsnode",
                                 "lssystemstats",
                                 "lsnodestats",
                                 "lsvdisk", 
