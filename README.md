@@ -7,9 +7,9 @@ This tools generates Excel file of Spectrum Virtualize system via REST API calls
 ###### Must read
 
 - Python 3 is required
-- [Spectrum Virtualize 8.1.3 or newer](https://www-01.ibm.com/common/ssi/ShowDoc.wss?docURL=/common/ssi/rep_ca/9/897/ENUS218-179/index.html&request_locale=en) is required
+- [Spectrum Virtualize 8.2.1 or newer](http://www-01.ibm.com/common/ssi/ShowDoc.wss?docURL=/common/ssi/rep_ca/2/897/ENUS218-482/index.html&request_locale=en) is required
+- Spectrum Virtualize 8.1.3 introduced API access but [does not have the needed API calls to generate the report](https://github.com/IBM/SVCheck/issues/3).
 - [requests, openpyxl and pandas modules **must** be installed](https://github.com/IBM/SVCheck/wiki/How-to-install-the-prerequisites) before running this tool
-- If you are running code 8.1.3.x on Storwize you will get a 'lsnode' error. Upgrade as [8.1.x goes out of support at the end of 2020](https://www.ibm.com/support/pages/support-statement-spectrum-virtualize-family-products-and-related-software)
 - To generate the Excel any user role is valid for the user on Spectrum Virtualize system
 - If a command replies no data it generates an empty sheet in the Excel file
 - Excel file and logs are created on ./output/IP_ADDRESS/ directory
@@ -122,4 +122,3 @@ Do you want to continue? (y/n): y
 2020-04-28 21:52:31,577 INFO:	 Completed saving lseventlog information into Excel file
 2020-04-28 21:52:31,577 INFO:	 Succesfully generated ./output/192.168.10.100/SVCheck_192.168.10.100_2020-04-28_21-52-24.xlsx report
 ```
-
